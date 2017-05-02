@@ -31,19 +31,24 @@ class MoviesController < ApplicationController
   end
 
   def update_row
-    @movie.title = params[:title]
-    @movie.year = params[:year]
-    @movie.duration = params[:duration]
-    @movie.description = params[:description]
-    @movie.image_url = params[:image_url]
-    @movie.director_id = params[:director_id]
+    movie = Movie.find(params[:id])
 
-    render("show")
+    movie.title = params[:title]
+    movie.year = params[:year]
+    movie.duration = params[:duration]
+    movie.description = params[:description]
+    movie.image_url = params[:image_url]
+    movie.director_id = params[:director_id]
+
+    movie.save
+
+    # render("show")
+    redirect_to("/movies/#{movie.id}")
   end
 
   def destroy
-    movie = Movie.find(params[:id])
+    @movie = Movie.find(params[:id])
 
-    movie.destroy
+    @movie.destroy
   end
 end
